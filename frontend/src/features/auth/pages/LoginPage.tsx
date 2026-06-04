@@ -1,20 +1,23 @@
-import { useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { LoaderCircle } from 'lucide-react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderCircle } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { useAuth } from '@/features/auth/auth-context'
-import { useLoginMutation } from '@/features/auth/hooks/useLoginMutation'
-import { loginSchema, type LoginSchema } from '@/features/auth/schemas/login-schema'
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { useAuth } from "@/features/auth/auth-context";
+import { useLoginMutation } from "@/features/auth/hooks/useLoginMutation";
+import {
+  loginSchema,
+  type LoginSchema,
+} from "@/features/auth/schemas/login-schema";
 
 export function LoginPage() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const { isAuthenticated, login } = useAuth()
-  const loginMutation = useLoginMutation()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { isAuthenticated, login } = useAuth();
+  const loginMutation = useLoginMutation();
 
   const {
     control,
@@ -23,25 +26,27 @@ export function LoginPage() {
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     },
-  })
+  });
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/', { replace: true })
+      navigate("/", { replace: true });
     }
-  }, [isAuthenticated, navigate])
+  }, [isAuthenticated, navigate]);
 
   const onSubmit = handleSubmit(async (values: LoginSchema) => {
-    const session = await loginMutation.mutateAsync(values)
-    login(session)
+    const session = await loginMutation.mutateAsync(values);
+    login(session);
 
-    const redirectTo = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? '/'
+    const redirectTo =
+      (location.state as { from?: { pathname?: string } } | null)?.from
+        ?.pathname ?? "/";
 
-    navigate(redirectTo, { replace: true })
-  })
+    navigate(redirectTo, { replace: true });
+  });
 
   return (
     <section className="grid w-full gap-0 lg:grid-cols-2">
@@ -54,17 +59,20 @@ export function LoginPage() {
         </div>
 
         <div>
-          <h1 className="text-4xl font-bold tracking-tight">Perpus Technical Test</h1>
+          <h1 className="text-4xl font-bold tracking-tight">
+            Perpus Technical Test
+          </h1>
           <p className="mt-4 max-w-md text-lg text-slate-300">
             Admin Dashboard untuk Manajemen Perpustakaan
           </p>
           <p className="mt-6 text-sm text-slate-400">
-            Kelola kategorii buku, penulis, penerbit, peminjaman, dan denda dengan mudah.
+            Kelola kategorii buku, penulis, penerbit, peminjaman, dan denda
+            dengan mudah.
           </p>
         </div>
 
         <div className="text-xs text-slate-500">
-          © 2024 Perpus Technical Test. All rights reserved.
+          © 2026 Perpus Technical Test. All rights reserved.
         </div>
       </div>
 
@@ -75,12 +83,17 @@ export function LoginPage() {
             <div className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-3 py-2 font-bold text-white">
               PT
             </div>
-            <h1 className="mt-4 text-2xl font-bold text-slate-900">Perpus Technical Test</h1>
+            <h1 className="mt-4 text-2xl font-bold text-slate-900">
+              Perpus Technical Test
+            </h1>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-5">
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-900" htmlFor="username">
+              <label
+                className="mb-2 block text-sm font-medium text-slate-900"
+                htmlFor="username"
+              >
                 Username
               </label>
               <Controller
@@ -95,11 +108,18 @@ export function LoginPage() {
                   />
                 )}
               />
-              {errors.username ? <p className="mt-2 text-sm text-red-600">{errors.username.message}</p> : null}
+              {errors.username ? (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.username.message}
+                </p>
+              ) : null}
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-900" htmlFor="password">
+              <label
+                className="mb-2 block text-sm font-medium text-slate-900"
+                htmlFor="password"
+              >
                 Password
               </label>
               <Controller
@@ -115,7 +135,11 @@ export function LoginPage() {
                   />
                 )}
               />
-              {errors.password ? <p className="mt-2 text-sm text-red-600">{errors.password.message}</p> : null}
+              {errors.password ? (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.password.message}
+                </p>
+              ) : null}
             </div>
 
             {loginMutation.isError ? (
@@ -129,8 +153,10 @@ export function LoginPage() {
               disabled={loginMutation.isPending}
               className="w-full"
             >
-              {loginMutation.isPending ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
-              {loginMutation.isPending ? 'Signing in...' : 'Sign in'}
+              {loginMutation.isPending ? (
+                <LoaderCircle className="h-4 w-4 animate-spin" />
+              ) : null}
+              {loginMutation.isPending ? "Signing in..." : "Sign in"}
             </Button>
           </form>
 
@@ -140,5 +166,5 @@ export function LoginPage() {
         </div>
       </div>
     </section>
-  )
+  );
 }

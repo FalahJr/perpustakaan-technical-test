@@ -13,5 +13,5 @@ export type PublisherFormValues = {
   alamat_penerbit: string
   telp_penerbit: string
   email_penerbit: string
-  deskripsi_penerbit: string
+  deskripsi: string
 }

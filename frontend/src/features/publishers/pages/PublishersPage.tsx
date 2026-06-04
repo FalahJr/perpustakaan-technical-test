@@ -19,7 +19,7 @@ const emptyForm: PublisherSchema = {
   alamat_penerbit: "",
   telp_penerbit: "",
   email_penerbit: "",
-  deskripsi_penerbit: "",
+  deskripsi: "",
 };
 
 export function PublishersPage() {
@@ -241,7 +241,7 @@ export function PublishersPage() {
                 alamat_penerbit: editingPublisher.alamat_penerbit ?? "",
                 telp_penerbit: editingPublisher.telp_penerbit ?? "",
                 email_penerbit: editingPublisher.email_penerbit ?? "",
-                deskripsi_penerbit: editingPublisher.deskripsi_penerbit ?? "",
+                deskripsi: editingPublisher.deskripsi_penerbit ?? "",
               }
             : emptyForm
         }
